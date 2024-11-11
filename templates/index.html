@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Space Station (ISS) Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>International Space Station (ISS) Tracker</h1>
+        <img src="static/iss.jpeg" class="iss-image">
+        
+        <div class="data-item">
+            <strong>Coordinates of ISS:</strong> 
+            <span id="coordinates">Latitude: {{ lat }}, Longitude: {{ lon }}</span>
+        </div>
+        
+        <div class="data-item">
+            <strong>Current Weather report:</strong> 
+            <span id="weather"> Temperature: {{ temp }} degrees celcius, Description:  {{ desc }}, Humidity: {{ humidity }}%</span>
+        </div>
+
+        <div class="data-item">
+            <strong>Distance between me and ISS:</strong> 
+            <span id="distance">{{ distance }}</span> km
+        </div>
+        
+        <div class="data-item">
+            <strong>The ISS is flying over:</strong> 
+        <!-- display name of ocean if above water and name of city and city if above land -->
+            <span id="location">
+                {% if country and city %}
+                    {{ city }}, {{ country }}
+                {% elif country %}
+                    {{ country }}
+                {% elif ocean %}
+                    {{ ocean }}
+                {% else %}
+                    Over an unknown region
+                {% endif %}
+            </span>
+        </div>
+
+       <!-- Display link to map if above land and picture of ocean if above water body -->
+        {% if map_link %}
+        <div class="data-item map-link">
+            <strong>Map of the current location:</strong> 
+            <a href="{{ map_link }}" target="_blank">View Map</a>
+        </div>
+        {% endif %}
+
+        <div class="data-item image-section">
+            {% if country_flag %}
+            <img src="{{ country_flag }}" alt="Country Flag" class="flag-image">
+            {% else %}
+            <img src="static/sea.jpeg" class="sea-image">
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
